@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~   Copyright (c) 2013-2022. LA Referencia / Red CLARA and others
+  ~
+  ~   This program is free software: you can redistribute it and/or modify
+  ~   it under the terms of the GNU Affero General Public License as published by
+  ~   the Free Software Foundation, either version 3 of the License, or
+  ~   (at your option) any later version.
+  ~
+  ~   This program is distributed in the hope that it will be useful,
+  ~   but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~   GNU Affero General Public License for more details.
+  ~
+  ~   You should have received a copy of the GNU Affero General Public License
+  ~   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  ~   This file is part of LA Referencia software platform LRHarvester v4.x
+  ~   For any further information please contact Lautaro Matas <lmatas@gmail.com>
+  -->
+
+<!--
+   Please use xjc command to generate the java classes (POJO) based on this schema file 
+   # xjc -extension -Xinject-code -d ./lareferencia-contrib-rcaap/src/main/java/ -b ./lareferencia-contrib-rcaap/src/main/resources/xjc/index.xml ./lareferencia-contrib-rcaap/src/main/resources/xsd/solr-indexing-model.xsd
+-->
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
+    targetNamespace="http://www.lareferencia.info/schema/4.0/index" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:index="http://www.lareferencia.info/schema/4.0/index">
+
+
+    <xs:element name="resource">
+        <xs:annotation>
+            <xs:documentation>A simple entity</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref="index:semanticIds" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="index:fields" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="index:relationships" minOccurs="0" maxOccurs="1"/>
+            </xs:all>
+            <xs:attribute name="id" type="xs:string" use="required"/>
+            <xs:attribute name="type" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="semanticIds">
+        <xs:annotation>
+            <xs:documentation>Container for the Search Fields</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="index:semanticId" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="semanticId" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>Available semantic id</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="fields">
+        <xs:annotation>
+            <xs:documentation>Container for the Search Fields</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="index:field" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="field">
+        <xs:annotation>
+            <xs:documentation>A simple field. Must have a name</xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+            <xs:sequence>
+                <xs:element ref="index:field" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="lang" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="relationships">
+        <xs:annotation>
+            <xs:documentation>A simple entity</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="index:relationship" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="relationship">
+        <xs:annotation>
+            <xs:documentation>A simple entity</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref="index:fields" minOccurs="1" maxOccurs="1"/>
+            </xs:all>
+            <xs:attribute name="id" type="xs:string" use="required"/>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    
+</xs:schema>

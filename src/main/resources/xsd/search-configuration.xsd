@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~   Copyright (c) 2013-2022. LA Referencia / Red CLARA and others
+  ~
+  ~   This program is free software: you can redistribute it and/or modify
+  ~   it under the terms of the GNU Affero General Public License as published by
+  ~   the Free Software Foundation, either version 3 of the License, or
+  ~   (at your option) any later version.
+  ~
+  ~   This program is distributed in the hope that it will be useful,
+  ~   but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~   GNU Affero General Public License for more details.
+  ~
+  ~   You should have received a copy of the GNU Affero General Public License
+  ~   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  ~   This file is part of LA Referencia software platform LRHarvester v4.x
+  ~   For any further information please contact Lautaro Matas <lmatas@gmail.com>
+  -->
+
+<!--
+   Please use xjc command to generate the java classes (POJO) based on this schema file 
+   # xjc -extension -Xinject-code -d ./lareferencia-contrib-rcaap/src/main/java/ -b ./lareferencia-contrib-rcaap/src/main/resources/xjc/search.xml  ./lareferencia-contrib-rcaap/src/main/resources/xsd/search-configuration.xsd
+-->
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
+    targetNamespace="http://www.lareferencia.info/schema/4.0/search" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:search="http://www.lareferencia.info/schema/4.0/search">
+
+    <xs:element name="configurations">
+        <xs:annotation>
+            <xs:documentation>Container for the Search Configurations</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="search:configuration" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="configuration">
+        <xs:annotation>
+            <xs:documentation>A simple search configuration. Must have an id</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref="search:index" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="search:base-query" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="search:fields" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="search:filters" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="search:sorts" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="search:sizes" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="search:facets" minOccurs="0" maxOccurs="1"/>
+            </xs:all>
+            <xs:attribute name="id" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="index" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>The engine search core</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="base-query" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>A simple query</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="fields">
+        <xs:annotation>
+            <xs:documentation>Container for the Search Fields</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="search:field" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="field">
+        <xs:annotation>
+            <xs:documentation>A simple field. Must have a name</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="type" type="search:fieldEnumType" use="optional" default="STRING"/>
+            <xs:attribute name="index-field" type="search:indexFieldType" use="required">
+                <xs:annotation>
+                    <xs:documentation>The index field name</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="sorts">
+        <xs:annotation>
+            <xs:documentation>Container for Sorting Configurations</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="search:sort" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="default" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="sort">
+        <xs:annotation>
+            <xs:documentation>Container for Sorting Fields. Must have a name</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="default-direction" default="ASC" type="search:OrderEnumType" use="optional">
+                <xs:annotation>
+                    <xs:documentation>The default direction for this sort configuration, having ASC as a default
+                        direction
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="index-field" type="search:indexFieldType" use="optional"/>
+            <xs:attribute name="field-type" type="search:fieldEnumType" use="optional" default="STRING"/>
+            <xs:attribute name="field-ref" type="xs:string" use="optional">
+                <xs:annotation>
+                    <xs:documentation>The reference field name for a specific sorting. This shouldn't be used together
+                        with index-field, if used, this attribute reference will have precedence over any specified
+                        field
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+
+
+    <xs:element name="sizes">
+        <xs:annotation>
+            <xs:documentation>Available search sizes. Must have a default value</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="search:size" maxOccurs="unbounded" minOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="default" type="xs:integer" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="size" type="xs:integer">
+        <xs:annotation>
+            <xs:documentation>Available search size</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+
+    <xs:element name="filters">
+        <xs:annotation>
+            <xs:documentation>Available filters</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="search:filter" maxOccurs="unbounded" minOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="default" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="filter">
+        <xs:annotation>
+            <xs:documentation>A single filter can be a set of filters like: orcid:1 OR orcid:2 OR orcid:3, having the
+                same field, but multiple values. A field can be referenced at field-ref or specified in an index-field
+                element
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice>
+                <xs:element ref="search:value" maxOccurs="1" minOccurs="0"/>
+                <xs:element ref="search:conditions" maxOccurs="1" minOccurs="0"/>
+            </xs:choice>
+            <xs:attribute name="name" type="xs:string" use="optional"/>
+            <xs:attribute name="index-field" type="search:indexFieldType" use="optional"/>
+            <xs:attribute name="field-type" type="search:fieldEnumType" use="optional" default="STRING"/>
+            <xs:attribute name="field-ref" type="xs:string" use="optional">
+                <xs:annotation>
+                    <xs:documentation>The be used to reference a field for a specific filter.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="conditions">
+        <xs:annotation>
+            <xs:documentation>Available complex filters</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="search:condition" maxOccurs="unbounded" minOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="default-filter-ref" type="xs:string" use="optional">
+                <xs:annotation>
+                    <xs:documentation>
+                        A default filter to be used in case of none of the filters is specified.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="condition">
+        <xs:annotation>
+            <xs:documentation>A complex filter is used to relate two filters</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref="search:filter" maxOccurs="1" minOccurs="0"/>
+            </xs:all>
+            <xs:attribute name="name" type="xs:string" use="optional"/>
+            <xs:attribute name="operator" type="search:LogicalOperatorEnumType" use="optional"
+                default="AND"/>
+            <xs:attribute name="filter-ref" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="value">
+        <xs:annotation>
+            <xs:documentation>The values on a specific filter.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="search:field-value" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="occurs" type="search:QuantifierEnumType" use="optional"
+                default="ONE_OR_MORE">
+                <xs:annotation>
+                    <xs:documentation>To deal with the occurrences for a set of values in a filter, like "a=b AND a=c"
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="condition" type="search:ConditionalOperatorEnumType" use="optional"
+                default="EQ">
+                <xs:annotation>
+                    <xs:documentation>The operator to use for comparing values filter, like "a=b" if the conditional
+                        operator is EQual
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="field-value" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>A single filter value entry
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="facets">
+        <xs:annotation>
+            <xs:documentation>Available facets.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref="search:facet-fields" maxOccurs="1" minOccurs="0"/>
+                <xs:element ref="search:facet-ranges" maxOccurs="1" minOccurs="0"/>
+            </xs:all>
+            <xs:attribute name="minCount" type="xs:integer" default="1" use="optional">
+                <xs:annotation>
+                <xs:documentation>The minimal count values for facets (default: 1)</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="facet-fields">
+        <xs:annotation>
+            <xs:documentation>Available facets.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="search:facet" maxOccurs="unbounded" minOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="facet-ranges">
+        <xs:annotation>
+            <xs:documentation>Available facets.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="search:facet" maxOccurs="unbounded" minOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="facet">
+        <xs:annotation>
+            <xs:documentation>Available facet entry</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="name" type="xs:string" use="optional"/>
+            <xs:attribute name="index-field" type="search:indexFieldType" use="optional"/>
+            <xs:attribute name="field-type" type="search:fieldEnumType" use="optional" default="STRING"/>
+            <xs:attribute name="field-ref" type="xs:string" use="optional">
+                <xs:annotation>
+                    <xs:documentation>The be used to reference a field for a specific facet.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="filter-ref" type="xs:string" use="required">
+                <xs:annotation>
+                    <xs:documentation>The be used to reference a filter for a specific facet.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="range-start" type="xs:string" use="optional">
+                <xs:annotation>
+                    <xs:documentation>A start range value to be used when specifying a range (DATE/NUMBER).
+                        When omitted the current date or number will be considered.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="range-end" type="xs:string" use="optional">
+                <xs:annotation>
+                    <xs:documentation>A end range value to be used when specifying a range (DATE/NUMBER).
+                        When omitted the current date or number will be considered.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="range-gap" type="xs:string" use="optional">
+                <xs:annotation>
+                    <xs:documentation>The be used to reference a field for a specific facet.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:simpleType name="indexFieldType">
+        <xs:annotation>
+            <xs:documentation>The index field name to be used on a specific context.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+
+
+
+    <xs:simpleType name="OrderEnumType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ASC">
+                <xs:annotation>
+                    <xs:documentation>Ascending order</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DESC">
+                <xs:annotation>
+                    <xs:documentation>Descending order</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:simpleType name="ConditionalOperatorEnumType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="EQ">
+                <xs:annotation>
+                    <xs:documentation>"Equal" condition operator</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NE">
+                <xs:annotation>
+                    <xs:documentation>"Not Equal" condition operator</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LT">
+                <xs:annotation>
+                    <xs:documentation>"Lower than" condition operator</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GT">
+                <xs:annotation>
+                    <xs:documentation>"Greater than" condition operator</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CONTAINS">
+                <xs:annotation>
+                    <xs:documentation>"Contains" condition operator</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RANGE">
+                <xs:annotation>
+                    <xs:documentation>"range" condition operator</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:simpleType name="LogicalOperatorEnumType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AND">
+                <xs:annotation>
+                    <xs:documentation>"And" logical operator</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OR">
+                <xs:annotation>
+                    <xs:documentation>"Or" logical operator</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NOT">
+                <xs:annotation>
+                    <xs:documentation>"Negation" logical operator</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="QuantifierEnumType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ONE_OR_MORE">
+                <xs:annotation>
+                    <xs:documentation>One or More occurrences</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ALL">
+                <xs:annotation>
+                    <xs:documentation>All must occur</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NONE">
+                <xs:annotation>
+                    <xs:documentation>None of the occurrences</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="fieldEnumType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DATE">
+                <xs:annotation>
+                    <xs:documentation>Date type</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TEXT">
+                <xs:annotation>
+                    <xs:documentation>Text type</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KEYWORD">
+                <xs:annotation>
+                    <xs:documentation>Keyword type</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NUMBER">
+                <xs:annotation>
+                    <xs:documentation>Number type</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="STRING">
+                <xs:annotation>
+                    <xs:documentation>String type</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
+

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~   Copyright (c) 2013-2022. LA Referencia / Red CLARA and others
+  ~
+  ~   This program is free software: you can redistribute it and/or modify
+  ~   it under the terms of the GNU Affero General Public License as published by
+  ~   the Free Software Foundation, either version 3 of the License, or
+  ~   (at your option) any later version.
+  ~
+  ~   This program is distributed in the hope that it will be useful,
+  ~   but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~   GNU Affero General Public License for more details.
+  ~
+  ~   You should have received a copy of the GNU Affero General Public License
+  ~   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  ~   This file is part of LA Referencia software platform LRHarvester v4.x
+  ~   For any further information please contact Lautaro Matas <lmatas@gmail.com>
+  -->
+
+<!--
+   Please use xjc command to generate the java classes (POJO) based on this schema file 
+   # xjc -extension -Xinject-code -d ./lareferencia-contrib-rcaap/src/main/java/ -b ./lareferencia-contrib-rcaap/src/main/resources/xjc/search.xml  ./lareferencia-contrib-rcaap/src/main/resources/xsd/search-configuration.xsd 
+-->
+<jxb:bindings version="1.0" 
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    xmlns:ci="http://jaxb.dev.java.net/plugin/code-injector" jxb:extensionBindingPrefixes="xjc">
+
+    <jxb:bindings schemaLocation="../xsd/search-configuration.xsd" node="/xs:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="org.lareferencia.contrib.rcaap.search.model"/>
+        </jxb:schemaBindings>
+
+    <!-- 
+        We need to add custom set*() methods for lists because xjc generation will not create them.
+        This code injection is a workaround solution for:
+        
+           (JAXB specification - page 60)
+           Design Note – There is no setter method for a List property. The getter returns the List
+           by reference. An item can be added to the List returned by the getter method using an
+           appropriate method defined on java.util.List. Rationale for this design in JAXB 1.0 was
+           to enable the implementation to wrapper the list and be able to perform checks as content
+           was added or removed from the List.
+    -->
+
+        <jxb:bindings node="//xs:element[@name='configurations']/xs:complexType">
+            <ci:code>
+<![CDATA[
+    /** 
+        this method was added automatically by a xjc configuration - xjc/search.xml
+        any required changes, you should do on that file 
+    */
+    public void setConfiguration(ArrayList<Configuration> configuration) {
+        this.getConfiguration().removeAll(this.getConfiguration());
+        this.getConfiguration().addAll(configuration);
+    }
+]]></ci:code></jxb:bindings>
+
+        <jxb:bindings node="//xs:element[@name='fields']/xs:complexType">
+            <ci:code>
+<![CDATA[
+    /** 
+        this method was added automatically by a xjc configuration - xjc/search.xml
+        any required changes, you should do on that file 
+    */
+    public void setField(ArrayList<Field> field) {
+        this.getField().removeAll(this.getField());
+        this.getField().addAll(field);
+    }
+]]></ci:code></jxb:bindings>
+
+
+        <jxb:bindings node="//xs:element[@name='sorts']/xs:complexType">
+            <ci:code>
+<![CDATA[
+    /** 
+        this method was added automatically by a xjc configuration - xjc/search.xml
+        any required changes, you should do on that file 
+    */
+    public void setSort(List<Sort> sort) {
+        this.getSort().removeAll(this.getSort());
+        this.getSort().addAll(sort);
+    }
+]]></ci:code></jxb:bindings>
+
+        <jxb:bindings node="//xs:element[@name='sizes']/xs:complexType">
+            <ci:code>
+<![CDATA[
+    /** 
+        this method was added automatically by a xjc configuration - xjc/search.xml
+        any required changes, you should do on that file 
+    */
+    public void setSize(List<BigInteger> size) {
+        this.getSize().removeAll(this.getSize());
+        this.getSize().addAll(size);
+    }
+]]></ci:code></jxb:bindings>
+
+        <jxb:bindings node="//xs:element[@name='filters']/xs:complexType">
+            <ci:code>
+<![CDATA[
+    /** 
+        this method was added automatically by a xjc configuration - xjc/search.xml
+        any required changes, you should do on that file 
+    */
+    public void setFilter(List<Filter> filter) {
+        this.getFilter().removeAll(this.getFilter());
+        this.getFilter().addAll(filter);
+    }
+]]></ci:code></jxb:bindings>
+
+
+        <jxb:bindings node="//xs:element[@name='value']/xs:complexType">
+            <ci:code>
+<![CDATA[
+    /** 
+        this method was added automatically by a xjc configuration - xjc/search.xml
+        any required changes, you should do on that file 
+    */
+    public void setFieldValue(List<String> fieldValue) {
+        this.getFieldValue().removeAll(this.getFieldValue());
+        this.getFieldValue().addAll(fieldValue);
+    }
+]]></ci:code></jxb:bindings>
+
+        <jxb:bindings node="//xs:element[@name='conditions']/xs:complexType">
+            <ci:code>
+<![CDATA[
+    /** 
+        this method was added automatically by a xjc configuration - xjc/search.xml
+        any required changes, you should do on that file 
+    */
+    public void setCondition(List<Condition> condition) {
+        this.getCondition().removeAll(this.getCondition());
+        this.getCondition().addAll(condition);
+    }
+]]></ci:code></jxb:bindings>
+
+        <jxb:bindings node="//xs:element[@name='facet-fields']/xs:complexType">
+            <ci:code>
+<![CDATA[
+    /** 
+        this method was added automatically by a xjc configuration - xjc/search.xml
+        any required changes, you should do on that file 
+    */
+    public void setFacet(List<Facet> facet) {
+        this.getFacet().removeAll(this.getFacet());
+        this.getFacet().addAll(facet);
+    }
+]]></ci:code></jxb:bindings>
+
+
+        <jxb:bindings node="//xs:element[@name='facet-ranges']/xs:complexType">
+            <ci:code>
+<![CDATA[
+    /** 
+        this method was added automatically by a xjc configuration - xjc/search.xml
+        any required changes, you should do on that file 
+    */
+    public void setFacet(List<Facet> facet) {
+        this.getFacet().removeAll(this.getFacet());
+        this.getFacet().addAll(facet);
+    }
+]]></ci:code></jxb:bindings>
+    </jxb:bindings>
+</jxb:bindings>
