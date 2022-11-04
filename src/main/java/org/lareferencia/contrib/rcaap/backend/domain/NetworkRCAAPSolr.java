@@ -173,7 +173,6 @@ public class NetworkRCAAPSolr {
         this.handlePrefix = (String) attributes.get("handlePrefix");
         this.doiPrefix = (String) attributes.get("doiPrefix");
 
-        this.degois = Boolean.valueOf(attributes.get("degois").toString());
         this.cienciaVitae = Boolean.valueOf(attributes.get("cienciaVitae").toString());
         this.cienciaId = Boolean.valueOf(attributes.get("cienciaId").toString());
         this.openAIRE = Boolean.valueOf(attributes.get("openAIRE").toString());
