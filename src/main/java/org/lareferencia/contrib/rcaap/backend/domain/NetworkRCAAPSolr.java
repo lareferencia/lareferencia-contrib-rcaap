@@ -80,6 +80,9 @@ public class NetworkRCAAPSolr {
     @Indexed(type = "string", required = false)
     private String country;
 
+    @Indexed(type = "string", required = false, name = "indexar.url")
+    private String indexarURL;
+
     @Indexed(type = "string", required = false, name = "directory.url")
     private String directoryURL;
 
