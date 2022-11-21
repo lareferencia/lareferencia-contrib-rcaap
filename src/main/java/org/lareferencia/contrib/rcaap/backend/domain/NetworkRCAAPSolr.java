@@ -152,6 +152,7 @@ public class NetworkRCAAPSolr {
         this.name = other.getName();
         this.institutionName = other.getInstitutionName();
         this.acronym = other.getAcronym();
+        this.oaiURL = other.getOriginURL();
 
         this.isni = (String) attributes.get("isni"); // this.isni = attributes.get(Isni();
         this.ringold = (String) attributes.get("ringold");
@@ -165,7 +166,7 @@ public class NetworkRCAAPSolr {
         this.description_en = (String) attributes.get("description_en");
         this.country = (String) attributes.get("country");
         this.directoryURL = (String) attributes.get("directoryURL");
-        this.oaiURL = (String) attributes.get("oaiURL");
+        
         this.roarMap = (String) attributes.get("roarMap");
         this.openDoar = (String) attributes.get("openDoar");
         this.sherpa = (String) attributes.get("sherpa");
