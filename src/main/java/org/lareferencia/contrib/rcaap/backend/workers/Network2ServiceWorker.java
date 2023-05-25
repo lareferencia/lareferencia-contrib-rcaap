@@ -130,7 +130,7 @@ public class Network2ServiceWorker extends BaseWorker<NetworkRunningContext> {
             }
 
             // Parse and persist entities
-            erService.parseAndPersistEntityRelationDataFromXMLDocument(entityDataDocument);
+            erService.parseAndPersistEntityRelationDataFromXMLDocument(entityDataDocument,false);
 
             this.postRun();            
             
