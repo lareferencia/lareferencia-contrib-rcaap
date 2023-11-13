@@ -30,12 +30,12 @@
 	<artifactId>lareferencia-contrib-rcaap</artifactId>
 	<name>LA Referencia contrib rcaap</name>
 	<description>LA Referencia RCAAP contributions library</description>
-	<version>4.2.1</version>
+	<version>4.2.2</version>
 
 	<parent>
 		<groupId>org.lareferencia</groupId>
 		<artifactId>lareferencia-parent</artifactId>
-		<version>4.2.1</version>
+		<version>4.2.2</version>
 	</parent>
 
 
@@ -45,13 +45,13 @@
 		<dependency>
 			<groupId>org.lareferencia</groupId>
 			<artifactId>lareferencia-core-lib</artifactId>
-			<version>4.2.1</version>
+			<version>4.2.2</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.lareferencia</groupId>
 			<artifactId>lareferencia-entity-lib</artifactId>
-			<version>4.2.1</version>
+			<version>4.2.2</version>
 		</dependency>
 		
 		<dependency>
