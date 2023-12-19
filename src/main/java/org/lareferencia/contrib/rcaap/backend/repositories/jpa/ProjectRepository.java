@@ -25,5 +25,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(path = "project", collectionResourceRel = "project")
-public interface ProjectRepository extends CrudRepository<Project, String> {
+public interface ProjectRepository extends CrudRepository<Project, Long> {
 }
