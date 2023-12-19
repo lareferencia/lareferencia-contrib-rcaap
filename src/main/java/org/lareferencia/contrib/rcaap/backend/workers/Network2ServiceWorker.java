@@ -154,8 +154,8 @@ public class Network2ServiceWorker extends BaseWorker<NetworkRunningContext> {
     }
     
     private void postRun () {
-        logger.info("Merging entities relation data ...");
-        erService.mergeEntityRelationData();
+        // logger.info("Merging entities relation data ...");
+        // erService.mergeEntityRelationData();
     }
 
 }

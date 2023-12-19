@@ -139,7 +139,7 @@ public class SimpleSolrEntityIndexer implements IEntityRCAAPIndexer {
             EntityType type = entityDataService.getEntityTypeFromId(entity.getEntityTypeId());
                         
 
-            Map<String, Collection<FieldOccurrence>> fieldsMap = entity.getOccurrencesAsMap();
+            Map<String, Collection<FieldOccurrence>> fieldsMap = entity.getFieldOccurrencesAsMap();
             
             // Convert raw json to xml
             // we need to remove @class
@@ -157,7 +157,7 @@ public class SimpleSolrEntityIndexer implements IEntityRCAAPIndexer {
                 for (FieldOccurrence occur : occurs.getValue()) {
                     Field field = obj.createField();
 
-                    field.setName(occur.getFieldName());
+                    field.setName(occurs.getKey());
                     field.setLang(occur.getLang());
 
                     field.getContent().add(occur.getContent());
@@ -167,31 +167,38 @@ public class SimpleSolrEntityIndexer implements IEntityRCAAPIndexer {
             resource.setFields(fields);
 
             Relationships rels = obj.createRelationships();
-            for (Relation relation : entity.getFromRelations()) {
-                RelationType relType = entityDataService.getRelationTypeFromId(relation.getRelationTypeId());
-                
 
-                Relationship rel = obj.createRelationship();
-                Fields relFields = obj.createFields();
+            for (String relType : entity.getRelatioTypes() ) {
 
-                Map<String, Collection<FieldOccurrence>> relationsAttrsMap = relation.getOccurrencesAsMap();
+                for (Relation relation : entity.getRelationsByType(relType)) {
 
-                for (Map.Entry<String, Collection<FieldOccurrence>> occurs : relationsAttrsMap.entrySet()) {
-                    for (FieldOccurrence occur : occurs.getValue()) {
-                        Field field = obj.createField();
+                    Relationship rel = obj.createRelationship();
+                    Fields relFields = obj.createFields();
 
-                        field.setName(occur.getFieldName());
-                        field.getContent().add(occur.getContent());
+                    Map<String, Collection<FieldOccurrence>> relationsAttrsMap = relation.getFieldOccurrencesAsMap();
 
-                        relFields.getField().add(field);
+                    for (Map.Entry<String, Collection<FieldOccurrence>> occurs : relationsAttrsMap.entrySet()) {
+                        for (FieldOccurrence occur : occurs.getValue()) {
+                            Field field = obj.createField();
+
+                            field.setName(occurs.getKey());
+                            field.getContent().add(occur.getContent());
+
+                            relFields.getField().add(field);
+                        }
                     }
+                    rel.setFields(relFields);
+                    rel.setId(relation.getTarget().toString());
+                    rel.setName(relType);
+                    
+                    rels.getRelationship().add(rel);
                 }
-                rel.setFields(relFields);
-                rel.setId(relation.getToEntity().getId().toString());
-                rel.setName(relType.getName());
-                
-                rels.getRelationship().add(rel);
-            }
+
+
+            }    
+
+
+            
             resource.setRelationships(rels);
 
             // transformed attributes to entities
