@@ -26,5 +26,5 @@
 // Generated on: 2021.03.29 at 08:39:01 AM GMT 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.lareferencia.info/schema/4.0/search", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.lareferencia.info/schema/4.0/search", elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package org.lareferencia.contrib.rcaap.search.model;

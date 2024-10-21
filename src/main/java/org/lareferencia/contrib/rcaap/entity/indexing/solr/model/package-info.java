@@ -26,5 +26,5 @@
 // Generated on: 2021.07.02 at 07:39:08 PM GMT 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.lareferencia.info/schema/4.0/index", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.lareferencia.info/schema/4.0/index", elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package org.lareferencia.contrib.rcaap.entity.indexing.solr.model;

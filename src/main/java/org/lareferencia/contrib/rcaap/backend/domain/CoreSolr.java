@@ -23,8 +23,8 @@ package org.lareferencia.contrib.rcaap.backend.domain;
 
 import java.util.Date;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
 import org.lareferencia.core.entity.indexing.service.EntityJsonSerializer;
 import org.springframework.data.annotation.Id;
