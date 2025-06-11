@@ -65,22 +65,6 @@
             <version>8.6.0</version>
         </dependency-->		
 
-		<!-- Swagger dependencies -->
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>3.0.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-annotations</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 
 
 		<dependency>
@@ -94,7 +78,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
+		
 
 		<dependency>
 			<groupId>org.json</groupId>
