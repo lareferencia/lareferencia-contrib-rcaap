@@ -295,4 +295,10 @@ public class SimpleSolrEntityIndexer implements IEntityRCAAPIndexer {
         return doc;
     }
 
+    @Override
+    public void prePage() throws EntityIndexingException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'prePage'");
+    }
+
 }
