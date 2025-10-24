@@ -54,10 +54,14 @@
 			<version>4.2.6</version>
 		</dependency>
 		
+		<!-- REMOVED: spring-boot-starter-data-solr no longer exists in Spring Boot 3.x
+		     Spring Data Solr was deprecated and removed. Using direct Solr dependencies instead.
+		     The solr-core dependency is already inherited from parent POM (version 9.5.0)
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-solr</artifactId>
 		</dependency>
+		-->
 		
 		<!--dependency>
             <groupId>org.apache.lucene</groupId>
