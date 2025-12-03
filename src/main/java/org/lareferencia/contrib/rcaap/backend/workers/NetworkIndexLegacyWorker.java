@@ -36,7 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import lombok.Getter;
 import lombok.Setter;
 
-public class NetworkIndexWorker extends BaseWorker<NetworkRunningContext> {
+public class NetworkIndexLegacyWorker extends BaseWorker<NetworkRunningContext> {
 
     /**
      * fin de Datos para la exclusión
@@ -46,7 +46,7 @@ public class NetworkIndexWorker extends BaseWorker<NetworkRunningContext> {
     @Setter
     private boolean executeDeletion;
 
-    private static Logger logger = LogManager.getLogger(NetworkIndexWorker.class);
+    private static Logger logger = LogManager.getLogger(NetworkIndexLegacyWorker.class);
 
     NumberFormat percentajeFormat = NumberFormat.getPercentInstance();
 
