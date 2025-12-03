@@ -1,129 +1,135 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 
-<!--
-  ~   Copyright (c) 2013-2022. LA Referencia / Red CLARA and others
-  ~
-  ~   This program is free software: you can redistribute it and/or modify
-  ~   it under the terms of the GNU Affero General Public License as published by
-  ~   the Free Software Foundation, either version 3 of the License, or
-  ~   (at your option) any later version.
-  ~
-  ~   This program is distributed in the hope that it will be useful,
-  ~   but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~   GNU Affero General Public License for more details.
-  ~
-  ~   You should have received a copy of the GNU Affero General Public License
-  ~   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  ~
-  ~   This file is part of LA Referencia software platform LRHarvester v4.x
-  ~   For any further information please contact Lautaro Matas <lmatas@gmail.com>
-  -->
+<!-- ~ Copyright (c) 2013-2022. LA Referencia / Red CLARA and others ~ ~ 
+	This program is free software: you can redistribute it and/or modify ~ it 
+	under the terms of the GNU Affero General Public License as published by 
+	~ the Free Software Foundation, either version 3 of the License, or ~ (at 
+	your option) any later version. ~ ~ This program is distributed in the hope 
+	that it will be useful, ~ but WITHOUT ANY WARRANTY; without even the implied 
+	warranty of ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+	~ GNU Affero General Public License for more details. ~ ~ You should have 
+	received a copy of the GNU Affero General Public License ~ along with this 
+	program. If not, see <http://www.gnu.org/licenses/>. ~ ~ This file is part 
+	of LA Referencia software platform LRHarvester v4.x ~ For any further information 
+	please contact Lautaro Matas <lmatas@gmail.com> -->
 
-<!--
-    This is an alternative file for search-configuration.xml
+<!-- This is an alternative file for search-configuration.xml To use this 
+	configuration, you must specify a qualifier: @Autowired @Qualifier("springService") 
+	SearchConfigurationService searchConfigurationService; -->
 
-    To use this configuration, you must specify a qualifier:
-    @Autowired
-    @Qualifier("springService")
-    SearchConfigurationService searchConfigurationService;
-
- -->
-
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
-    xmlns:util="http://www.springframework.org/schema/util"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="searchConfigurations" class="org.lareferencia.contrib.rcaap.search.model.Configurations">
-        <property name="configuration">
-            <list value-type="org.lareferencia.contrib.rcaap.search.model.Configuration">
-                <ref bean="personSearchConfiguration"/>
-                <ref bean="publicationSearchConfiguration"/>
-            </list>
-        </property>
-    </bean>
+	<bean id="searchConfigurations"
+		class="org.lareferencia.contrib.rcaap.search.model.Configurations">
+		<property name="configuration">
+			<list
+				value-type="org.lareferencia.contrib.rcaap.search.model.Configuration">
+				<ref bean="personSearchConfiguration" />
+				<ref bean="publicationSearchConfiguration" />
+			</list>
+		</property>
+	</bean>
 
-    <bean id="personSearchConfiguration" class="org.lareferencia.contrib.rcaap.search.model.Configuration">
-        <property name="id" value="personSearchConfiguration"/>
-        <property name="index" value="entity"/>
-        <property name="baseQuery" value="type:Person"/>
-        <property name="fields">
-            <bean class="org.lareferencia.contrib.rcaap.search.model.Fields">
-                <property name="field">
-                    <list value-type="org.lareferencia.contrib.rcaap.search.model.Field">
-                        <bean class="org.lareferencia.contrib.rcaap.search.model.Field">
-                            <property name="name" value="familyNameField"/>
-                            <property name="indexField" value="Person.familyName"/>
-                        </bean>                    
-                        <bean class="org.lareferencia.contrib.rcaap.search.model.Field">
-                            <property name="name" value="givenNameField"/>
-                            <property name="indexField" value="Person.givenName"/>
-                        </bean>
-                        <bean class="org.lareferencia.contrib.rcaap.search.model.Field">
-                            <property name="name" value="orcidField"/>
-                            <property name="indexField" value="Person.identifier.orcid"/>
-                        </bean>
-                        <bean class="org.lareferencia.contrib.rcaap.search.model.Field">
-                            <property name="name" value="cienciaIdField"/>
-                            <property name="indexField" value="Person.identifier.cienciaID"/>
-                        </bean>
-                    </list>
-                </property>
-            </bean>
-        </property>
-        <property name="filters">
-            <bean class="org.lareferencia.contrib.rcaap.search.model.Filters">
-                <property name="filter">
-                    <list value-type="org.lareferencia.contrib.rcaap.search.model.Filter">
-                        <bean class="org.lareferencia.contrib.rcaap.search.model.Filter">
-                            <property name="name" value="orcidFilter"/>
-                            <property name="fieldRef" value="orcidField"/>
-                        </bean>
-                        <bean class="org.lareferencia.contrib.rcaap.search.model.Filter">
-                            <property name="name" value="cienciaIDFilter"/>
-                            <property name="fieldRef" value="cienciaIdField"/>
-                        </bean>
-                    </list>
-                </property>
-            </bean>
-        </property>
-        <property name="sorts">
-            <bean class="org.lareferencia.contrib.rcaap.search.model.Sorts">
-                <property name="sort">
-                    <list value-type="org.lareferencia.contrib.rcaap.search.model.Sort">
-                        <bean class="org.lareferencia.contrib.rcaap.search.model.Sort">
-                            <property name="name" value="last_name"/>
-                            <property name="fieldRef" value="familyNameField"/>
-                            <property name="defaultDirection">
-                                <util:constant
-                                    static-field="org.lareferencia.contrib.rcaap.search.model.OrderEnumType.ASC"/>
-                            </property>
-                        </bean>
-                        <bean class="org.lareferencia.contrib.rcaap.search.model.Sort">
-                            <property name="name" value="first_name"/>
-                            <property name="indexField" value="Person.givenName"/>
-                            <property name="defaultDirection">
-                                <util:constant
-                                    static-field="org.lareferencia.contrib.rcaap.search.model.OrderEnumType.ASC"/>
-                            </property>
-                        </bean>
-                    </list>
-                </property>
-            </bean>
-        </property>
-        <property name="sizes">
-            <bean class="org.lareferencia.contrib.rcaap.search.model.Sizes">
-                <property name="default" value="5"/>
-                <property name="size">
-                    <list>
-                        <value>1</value>
-                        <value>10</value>
-                        <value>100</value>
-                    </list>
-                </property>
-            </bean>
-        </property>
-    </bean>
-    <bean id="publicationSearchConfiguration" class="org.lareferencia.contrib.rcaap.search.model.Configuration"/>
+	<bean id="personSearchConfiguration"
+		class="org.lareferencia.contrib.rcaap.search.model.Configuration">
+		<property name="id" value="personSearchConfiguration" />
+		<property name="index" value="entity" />
+		<property name="baseQuery" value="type:Person" />
+		<property name="fields">
+			<bean class="org.lareferencia.contrib.rcaap.search.model.Fields">
+				<property name="field">
+					<list
+						value-type="org.lareferencia.contrib.rcaap.search.model.Field">
+						<bean
+							class="org.lareferencia.contrib.rcaap.search.model.Field">
+							<property name="name" value="familyNameField" />
+							<property name="indexField" value="Person.familyName" />
+						</bean>
+						<bean
+							class="org.lareferencia.contrib.rcaap.search.model.Field">
+							<property name="name" value="givenNameField" />
+							<property name="indexField" value="Person.givenName" />
+						</bean>
+						<bean
+							class="org.lareferencia.contrib.rcaap.search.model.Field">
+							<property name="name" value="orcidField" />
+							<property name="indexField"
+								value="Person.identifier.orcid" />
+						</bean>
+						<bean
+							class="org.lareferencia.contrib.rcaap.search.model.Field">
+							<property name="name" value="cienciaIdField" />
+							<property name="indexField"
+								value="Person.identifier.cienciaID" />
+						</bean>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="filters">
+			<bean
+				class="org.lareferencia.contrib.rcaap.search.model.Filters">
+				<property name="filter">
+					<list
+						value-type="org.lareferencia.contrib.rcaap.search.model.Filter">
+						<bean
+							class="org.lareferencia.contrib.rcaap.search.model.Filter">
+							<property name="name" value="orcidFilter" />
+							<property name="fieldRef" value="orcidField" />
+						</bean>
+						<bean
+							class="org.lareferencia.contrib.rcaap.search.model.Filter">
+							<property name="name" value="cienciaIDFilter" />
+							<property name="fieldRef" value="cienciaIdField" />
+						</bean>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="sorts">
+			<bean class="org.lareferencia.contrib.rcaap.search.model.Sorts">
+				<property name="sort">
+					<list
+						value-type="org.lareferencia.contrib.rcaap.search.model.Sort">
+						<bean
+							class="org.lareferencia.contrib.rcaap.search.model.Sort">
+							<property name="name" value="last_name" />
+							<property name="fieldRef" value="familyNameField" />
+							<property name="defaultDirection">
+								<util:constant
+									static-field="org.lareferencia.contrib.rcaap.search.model.OrderEnumType.ASC" />
+							</property>
+						</bean>
+						<bean
+							class="org.lareferencia.contrib.rcaap.search.model.Sort">
+							<property name="name" value="first_name" />
+							<property name="indexField" value="Person.givenName" />
+							<property name="defaultDirection">
+								<util:constant
+									static-field="org.lareferencia.contrib.rcaap.search.model.OrderEnumType.ASC" />
+							</property>
+						</bean>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="sizes">
+			<bean class="org.lareferencia.contrib.rcaap.search.model.Sizes">
+				<property name="default" value="5" />
+				<property name="size">
+					<list>
+						<value>1</value>
+						<value>10</value>
+						<value>100</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="publicationSearchConfiguration"
+		class="org.lareferencia.contrib.rcaap.search.model.Configuration" />
 </beans>
