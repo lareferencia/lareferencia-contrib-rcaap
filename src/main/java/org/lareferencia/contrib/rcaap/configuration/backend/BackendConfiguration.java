@@ -58,7 +58,7 @@ public class BackendConfiguration {
     }
 
     @Bean(name = "projectSolrClient")
-    public SolrClient projectSolrClient(@Value("${project.solr.server}") String solrHost) {
+    public SolrClient projectSolrClient(@Value("${projects.solr.server}") String solrHost) {
         return new HttpSolrClient.Builder(solrHost).build();
     }
 
