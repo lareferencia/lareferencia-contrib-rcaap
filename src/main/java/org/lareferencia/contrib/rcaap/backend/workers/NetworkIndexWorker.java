@@ -148,6 +148,7 @@ public class NetworkIndexWorker extends BaseWorker<NetworkRunningContext> {
 
             metadataTransformer.setParameter("networkAcronym", networkAcronym);
             metadataTransformer.setParameter("networkName", optCurrentNetwork.get().getName());
+            metadataTransformer.setParameter("networkPublished", optCurrentNetwork.get().getPublished());
 
             metadataTransformer.setParameter("institutionName", optCurrentNetwork.get().getInstitutionName());
             metadataTransformer.setParameter("institutionAcronym", optCurrentNetwork.get().getInstitutionAcronym());
