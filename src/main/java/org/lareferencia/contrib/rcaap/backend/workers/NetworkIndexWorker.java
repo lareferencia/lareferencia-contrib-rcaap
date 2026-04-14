@@ -141,6 +141,7 @@ public class NetworkIndexWorker extends BaseWorker<NetworkRunningContext> {
             this.preRun();
 
             metadataTransformer = trfService.getMDTransformer(sourceSchemaName, targetSchemaName);
+            Boolean published = Optional.ofNullable(optCurrentNetwork.get().getPublished()).orElseGet(() -> false);
 
             // record parameters to transformer
             metadataTransformer.setParameter("identifier", provenancePrefix + networkAcronym);
@@ -148,7 +149,7 @@ public class NetworkIndexWorker extends BaseWorker<NetworkRunningContext> {
 
             metadataTransformer.setParameter("networkAcronym", networkAcronym);
             metadataTransformer.setParameter("networkName", optCurrentNetwork.get().getName());
-            metadataTransformer.setParameter("networkPublished", optCurrentNetwork.get().getPublished());
+            metadataTransformer.setParameter("networkPublished", published.toString());
 
             metadataTransformer.setParameter("institutionName", optCurrentNetwork.get().getInstitutionName());
             metadataTransformer.setParameter("institutionAcronym", optCurrentNetwork.get().getInstitutionAcronym());

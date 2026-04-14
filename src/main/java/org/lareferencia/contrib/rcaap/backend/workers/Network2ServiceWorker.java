@@ -112,6 +112,7 @@ public class Network2ServiceWorker extends BaseWorker<NetworkRunningContext> {
 
         try {
             metadataTransformer = trfService.getMDTransformer(sourceSchemaName, targetSchemaName);
+            Boolean published = Optional.ofNullable(optCurrentNetwork.get().getPublished()).orElseGet(() -> false);
 
             // record parameters to transformer
             metadataTransformer.setParameter("identifier", provenancePrefix + networkAcronym);
@@ -119,6 +120,7 @@ public class Network2ServiceWorker extends BaseWorker<NetworkRunningContext> {
 
             metadataTransformer.setParameter("networkAcronym", networkAcronym);
             metadataTransformer.setParameter("name", optCurrentNetwork.get().getName());
+            metadataTransformer.setParameter("networkPublished", published.toString());
 
             metadataTransformer.setParameter("institutionName", optCurrentNetwork.get().getInstitutionName());
             metadataTransformer.setParameter("institutionAcronym", optCurrentNetwork.get().getInstitutionAcronym());
@@ -130,7 +132,7 @@ public class Network2ServiceWorker extends BaseWorker<NetworkRunningContext> {
             }
 
             // Parse and persist entities
-            erService.parseAndPersistEntityRelationDataFromXMLDocument(entityDataDocument, false);
+            erService.parseAndPersistEntityRelationDataFromXMLDocument(entityDataDocument);
 
             this.postRun();            
             
