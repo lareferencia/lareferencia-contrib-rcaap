@@ -228,7 +228,7 @@ public class SimpleSolrEntityIndexer implements IEntityRCAAPIndexer {
         List<String> queries = idList.stream().map(id -> solrRecordIDField + ":" + id).collect(Collectors.toList());
         // Delete entity record
         try {
-            this.sendUpdateToSolr("<delete><query>" + String.join(" AND ", queries) + "</query></delete>");
+            this.sendUpdateToSolr("<delete><query>" + String.join(" OR ", queries) + "</query></delete>");
 
         } catch (EntityIndexingException e) {
             throw new EntityIndexingException(
