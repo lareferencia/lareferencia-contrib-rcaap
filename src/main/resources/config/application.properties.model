@@ -1,0 +1,15 @@
+# SOLR
+merge.solr.cores.person.url=http://localhost:8983/solr
+merge.solr.cores.person.core=person
+merge.solr.cores.person.connectionTimeout=5000
+merge.solr.cores.person.socketTimeout=10000
+
+merge.solr.cores.project.url=http://localhost:8983/solr
+merge.solr.cores.project.core=project
+merge.solr.cores.project.connectionTimeout=5000
+merge.solr.cores.project.socketTimeout=10000
+
+merge.solr.cores.organization.url=http://localhost:8983/solr
+merge.solr.cores.organization.core=organization
+merge.solr.cores.organization.connectionTimeout=5000
+merge.solr.cores.organization.socketTimeout=10000

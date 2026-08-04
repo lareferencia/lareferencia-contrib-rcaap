@@ -30,12 +30,12 @@
 	<artifactId>lareferencia-contrib-rcaap</artifactId>
 	<name>LA Referencia contrib rcaap</name>
 	<description>LA Referencia RCAAP contributions library</description>
-	<version>4.2.6</version>
+	<version>4.1</version>
 
 	<parent>
 		<groupId>org.lareferencia</groupId>
 		<artifactId>lareferencia-parent</artifactId>
-		<version>4.2.6</version>
+		<version>4.1</version>
 	</parent>
 
 
@@ -45,31 +45,42 @@
 		<dependency>
 			<groupId>org.lareferencia</groupId>
 			<artifactId>lareferencia-core-lib</artifactId>
-			<version>4.2.6</version>
+			<version>4.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.lareferencia</groupId>
 			<artifactId>lareferencia-entity-lib</artifactId>
-			<version>4.2.6</version>
+			<version>4.1</version>
 		</dependency>
 		
-		<!-- REMOVED: spring-boot-starter-data-solr no longer exists in Spring Boot 3.x
-		     Spring Data Solr was deprecated and removed. Using direct Solr dependencies instead.
-		     The solr-core dependency is already inherited from parent POM (version 9.5.0)
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-solr</artifactId>
-		</dependency>
-		-->
-		
-		<!--dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-solr</artifactId>
+        </dependency>
+        
+        <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-queryparser</artifactId>
             <version>8.6.0</version>
-        </dependency-->		
+        </dependency>
 
-
+        <!-- Swagger dependencies -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>3.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
 		<dependency>
 			<groupId>org.junit.vintage</groupId>

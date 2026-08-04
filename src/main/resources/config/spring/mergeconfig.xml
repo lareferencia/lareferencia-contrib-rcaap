@@ -1,0 +1,49 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+         http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Configuração de merge -->
+
+    <bean id="mergeConfig" class="org.lareferencia.contrib.rcaap.search.merge.MergeConfigurations">
+
+        <property name="mergeConfigs">
+            <list>
+
+                <bean class="org.lareferencia.contrib.rcaap.search.merge.EntityMergeConfig">
+                    <property name="type" value="PERSON"/>
+                    <property name="fields">
+                        <list>
+                            <value>semanticIdentifier_str_mv</value>
+                        </list>
+                    </property>
+                    <property name="strategy" value="personMergeStrategy"/>
+                </bean>
+
+                <bean class="org.lareferencia.contrib.rcaap.search.merge.EntityMergeConfig">
+                    <property name="type" value="PROJECT"/>
+                    <property name="fields">
+                        <list>
+                            <value>semanticIdentifier_str_mv</value>
+                        </list>
+                    </property>
+                    <property name="strategy" value="projectMergeStrategy"/>
+                </bean>
+
+                <bean class="org.lareferencia.contrib.rcaap.search.merge.EntityMergeConfig">
+                    <property name="type" value="ORGANIZATION"/>
+                    <property name="fields">
+                        <list>
+                            <value>semanticIdentifier_str_mv</value>
+                        </list>
+                    </property>
+                    <property name="strategy" value="organizationMergeStrategy"/>
+                </bean>
+
+            </list>
+        </property>
+
+    </bean>
+
+</beans>
